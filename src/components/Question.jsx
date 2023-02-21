@@ -4,9 +4,7 @@ const Question = ({ q, handleClickAnswer }) => {
     let answers = q.answers;
     
     const handleClick = answer => {
-        if(q.checked){
-            return;
-        }
+        if(q.checked) return;
         handleClickAnswer(q.id, answer);
     }
 
