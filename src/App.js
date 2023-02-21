@@ -15,20 +15,24 @@ function App() {
 
   useEffect(() => {
     const getQuestion = async () => {
-      const res = await fetch('https://opentdb.com/api.php?amount=5&category=18&encode=base64');
-      const data = await res.json();
-      let q = [];
-      data.results.forEach(question => {
-        q.push({
-          id: nanoid(),
-          question: question.question,
-          correct: question.correct_answer,
-          selected: null,
-          checked: false,
-          answers: shuffleArray([...question.incorrect_answers, question.correct_answer])
-        });
-      })
-      setQuestions(q);
+      try{
+        const res = await fetch('https://opentdb.com/api.php?amount=5&category=18&encode=base64');
+        const data = await res.json();
+        let q = [];
+        data.results.forEach(question => {
+          q.push({
+            id: nanoid(),
+            question: question.question,
+            correct: question.correct_answer,
+            selected: null,
+            checked: false,
+            answers: shuffleArray([...question.incorrect_answers, question.correct_answer])
+          });
+        })
+        setQuestions(q);
+      }catch(err) {
+        throw new Error(err);
+      }
     }
     getQuestion();
   }, [count])
